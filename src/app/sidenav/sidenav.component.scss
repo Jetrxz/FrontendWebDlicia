@@ -15,18 +15,21 @@
         width: 100%;
 
         .logo{
-            background: #fff;
+            background-color: transparent;
             text-align: center;
-            width: 3rem;
-            min-width: 3rem;
+            width: 3.5rem;
+            min-width: 3.5rem;
             border-radius: 0.313rem;
             padding: 0.313rem;
-            font-size: 24px;
-            font-weight: 900;
             cursor: pointer;
             border: none;
         }
-        
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+        }
+
         .logo-text{
             margin-left: 1.5rem;
             font-size: 24px;

@@ -1,79 +1,69 @@
 import { INavbarData } from "./helper";
 
 export const navbarData: INavbarData[]  = [
-    {
-        routeLink: 'dashboard',
-        icon: 'fa-solid fa-house',
-        label: 'Dashboard'
-    },
+    // {
+    //     routeLink: 'dashboard',
+    //     icon: 'fa-solid fa-house',
+    //     label: 'Dashboard'
+    // },
     {
         routeLink: 'products',
         icon: 'fa-solid fa-box-open',
-        label: 'Products',
+        label: 'Productos',
         items: [
             {
                 routeLink: 'products/level1.1',
-                label: 'Level 1.1',
-                items: [
-                    {
-                        routeLink: 'products/level2.1',
-                        label: 'Level 2.1',
-                    },
-                    {
-                        routeLink: 'products/level2.2',
-                        label: 'Level 2.2',
-                        items: [
-                            {
-                                routeLink: 'products/level3.1',
-                                label: 'Level 3.1',
-                            },
-                            {
-                                routeLink: 'products/level3.2',
-                                label: 'Level 3.2',
-                            },        
-                        ]
-                    },
-                ]
+                label: 'Mantenimiento de Productos',
             },
             {
                 routeLink: 'products/level1.2',
-                label: 'level 1.2'
+                label: 'Mantenimiento de Categorias'
             }
         ]
     },
     {
         routeLink: 'statistics',
-        icon: 'fa-solid fa-chart-bar',
-        label: 'Statistics'
+        icon: 'fa-solid fa-truck-field',
+        label: 'Insumos',
+        items: [
+            {
+                routeLink: 'products/mantenimiento-insumos',
+                label: 'Mantenimiento de Insumos',
+            },
+            {
+                routeLink: 'products/mantenimiento-insumos',
+                label: 'Listado de Insumos',
+            },
+        ]
     },
     {
         routeLink: 'coupens',
         icon: 'fa-solid fa-tags',
-        label: 'Coupens',
+        label: 'Ventas',
         items: [
             {
                 routeLink: 'coupens/list',
-                label: 'List Coupens'
+                label: 'Reporte de Ventas'
             },
             {
                 routeLink: 'coupens/create',
-                label: 'Create Coupens'
+                label: 'Reporte de Clientes'
+            },
+            {
+                routeLink: 'coupens/create',
+                label: 'Reporte de Pedidos'
             }
         ]
     },
     {
         routeLink: 'pages',
-        icon: 'fa-solid fa-file',
-        label: 'Pages'
-    },
-    {
-        routeLink: 'media',
-        icon: 'fa-solid fa-camera',
-        label: 'Media'
-    },
-    {
-        routeLink: 'settings',
-        icon: 'fa-solid fa-cog',
-        label: 'Settings'
+        icon: 'fa-solid fa-user',
+        label: 'Empleados',
+        items: [
+            {
+                routeLink: 'coupens/list',
+                label: 'Asignar Empleados'
+            }
+        ]
     }
 ];
