@@ -1,80 +1,93 @@
 <div class="container-fluid">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Mantenimiento de Productos</h1>
+    <button type="button" class="btn btn-outline-success">
+      <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE" (click)="openCreateModal()"></i>
+    </button>
+  </div>
   <div class="d-flex flex-wrap row">
-    <div class="card mx-4 mb-3" style="width: 18rem">
+    <div class="card mx-4 mb-3" style="width: 18rem" *ngFor="let i of productos">
       <div class="card-body">
-        <img src="..." class="card-img-top" alt="..." />
-        <h5 class="card-title">Alfajores en Bocaditos</h5>
+        <img [src]="urlBackend + i.imgProduct" class="card-img-top" alt="..." />
+        <h5 class="card-title">{{i.productName}}</h5>
         <p class="card-text">
-          Alfajores en Miniatura ideal para cualquier ocasion o evento por
-          ciento
+          {{i.productDescription}}
         </p>
-        <p class="card-text"><strong>Cantidad Disponible:</strong></p>
+        <p class="card-text"><strong>Precio Actual:</strong></p>
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline" type="button" id="minusBtn">
-              -
-            </button>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Cantidad"
-            aria-label="Cantidad"
-            aria-describedby="basic-addon1"
-            id="quantityInput"
-            value="1"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-outline" type="button" id="plusBtn">
-              +
-            </button>
-          </div>
+          <input type="text" class="form-control" placeholder="Cantidad" aria-label="Cantidad"
+            aria-describedby="basic-addon1" id="quantityInput" [value]="'S/.' + i.price" disabled />
         </div>
-        <button type="button" class="btn btn-transparent">
-          <i
-            class="fa-regular fa-pen-to-square fa-xl"
-            style="color: #2657ab"
-          ></i>
-        </button>
-      </div>
-    </div>
-    <div class="card mx-4 mb-3" style="width: 18rem">
-      <div class="card-body">
-        <img src="..." class="card-img-top" alt="..." />
-        <h5 class="card-title">Alfajores en Bocaditos</h5>
-        <p class="card-text">
-          Alfajores en Miniatura ideal para cualquier ocasion o evento por
-          ciento
-        </p>
-        <p class="card-text"><strong>Cantidad Disponible:</strong></p>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline" type="button" id="minusBtn">
-              -
-            </button>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Cantidad"
-            aria-label="Cantidad"
-            aria-describedby="basic-addon1"
-            id="quantityInput"
-            value="1"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-outline" type="button" id="plusBtn">
-              +
-            </button>
-          </div>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
+            <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+          </button>
+          <button type="button" class="btn btn-transparent" (click)="openUpdateModal(i)">
+            <i class="fa-solid fa-upload fa-xl" style="color: #c3a537"></i>
+          </button>
         </div>
-        <button type="button" class="btn btn-transparent">
-          <i
-            class="fa-regular fa-pen-to-square fa-xl"
-            style="color: #2657ab"
-          ></i>
-        </button>
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <ng-template #editModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createModalLabel">{{ isEditMode ? 'Editar Producto' : 'Crear Producto' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Nombre del Producto</label>
+        <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="selectedProduct.productName">
+      </div>
+      <div class="mb-3">
+        <label for="createSupplieDescription" class="form-label">Descripcion del Producto</label>
+        <input type="text" class="form-control" id="createSupplieDescription" [(ngModel)]="selectedProduct.productDescription">
+      </div>
+      <div class="mb-3">
+        <label for="createQuantity" class="form-label">Precio</label>
+        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedProduct.price">
+      </div>
+      <div class="mb-3">
+        <label for="createUnitOfMesureId" class="form-label">Tipo de Producto</label>
+        <select class="form-select" id="createUnitOfMesureId" [(ngModel)]="selectedProduct.productTypeId">
+          <option *ngFor="let ptype of tipoProductos" [value]="ptype.idProductType">{{ ptype.productType }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="createUnitOfMesureId" class="form-label">Unidad de Medida</label>
+        <select class="form-select" id="createUnitOfMesureId" [(ngModel)]="selectedProduct.unitOfMesureId">
+          <option *ngFor="let unit of unitOfMesureList" [value]="unit.idUnitOfMesure">{{ unit.unitName }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">{{ isEditMode ? 'Guardar Cambios' : 'Crear Insumo' }}</button>
+    </div>
+  </ng-template>
+
+   <!-- Editar Imagen -->
+   <ng-template #updateModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createModalLabel">Actualizar Imagen</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Nombre del Producto</label>
+        <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="selectedProduct.productName" [disabled]="true">
+      </div>
+      <div class="mb-3">
+        <img [src]="urlBackend + selectedProduct.imgProduct" class="card-img-top" alt="...">
+        <label for="formFile" class="form-label">Seleccione la Imagen</label>
+        <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="updateImage(modal)">Guardar Cambios</button>
+    </div>
+  </ng-template>
 </div>

@@ -32,7 +32,7 @@ export const navbarData: INavbarData[]  = [
             },
             {
                 routeLink: 'supplies/supplies-list',
-                label: 'Listado de Insumos',
+                label: 'Kardex de Insumos'
             },
         ]
     },
@@ -63,6 +63,14 @@ export const navbarData: INavbarData[]  = [
             {
                 routeLink: 'employees/employees-assign',
                 label: 'Asignar Empleados'
+            },
+            {
+                routeLink: 'employees/employees-list',
+                label: 'Mantenimiento de Empleados'
+            },
+            {
+                routeLink: 'employees/employees-profile',
+                label: 'Mantenimiento de Perfiles'
             }
         ]
     }

@@ -1,40 +1,27 @@
-<div class="container">
-  <div class="card">
+<div class="container d-flex justify-content-center">
+  <div class="card p-3">
     <form class="row g-3">
-        <div class="col-md-6">
-          <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" id="inputEmail4">
-        </div>
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword4">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">Address</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="col-12">
-          <label for="inputAddress2" class="form-label">Address 2</label>
-          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
-        <div class="col-md-6">
-          <label for="inputCity" class="form-label">City</label>
-          <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-          <label for="inputState" class="form-label">State</label>
-          <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="inputZip" class="form-label">Zip</label>
-          <input type="text" class="form-control" id="inputZip">
-        </div>
-        <div class="col-12 text-center">
-          <button type="submit" class="btn btn-primary">Sign in</button>
-        </div>
-      </form>
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="inputEmail4" [(ngModel)]="nombre" name="nombre">
+      </div>
+      <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="inputPassword4" [(ngModel)]="correo" name="correo">
+      </div>
+      <div class="col-12">
+        <label for="inputAddress" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="inputAddress" placeholder="" [(ngModel)]="clave" name="clave">
+      </div>
+      <div class="col-md-4">
+        <label for="inputState" class="form-label">Tipo de Usuario</label>
+        <select id="inputState" class="form-select" [(ngModel)]="perfil" name="perfil" *ngFor="let i of tipoUsuarios">
+          <option>{{i.name}}</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-info" (click)="crearEmpleado()">
+        <i class="fa-solid fa-plus fa-xl" style="color: #2657ab">&nbsp;Crear Empleado</i>
+      </button>
+    </form>
   </div>
 </div>

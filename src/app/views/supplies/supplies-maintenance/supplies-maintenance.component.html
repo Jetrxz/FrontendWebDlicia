@@ -1,87 +1,71 @@
 <div class="container-fluid">
-    <div class="card-header">
-      <h1>Mantenimiento de Insumos</h1>
-    </div>
-    <div class="card-body">
-      <table class="table table-secondary table-striped text-center">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Bocaditos</td>
-            <td>Bocaditos para fiestas o eventos especiales</td>
-            <td>
-              <i class="fa-solid fa-circle-dot fa-lg" style="color: #57bf31"></i
-              >&nbsp;&nbsp;Activo
-            </td>
-            <td>
-              <button type="button" class="btn btn-transparent">
-                <i
-                  class="fa-regular fa-pen-to-square fa-xl"
-                  style="color: #2657ab"
-                ></i></button
-              ><button type="button" class="btn btn-transparent">
-                <i
-                  class="fa-regular fa-trash-can fa-xl"
-                  style="color: #ac1111"
-                ></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Bocaditos</td>
-            <td>Bocaditos para fiestas o eventos especiales</td>
-            <td>
-              <i class="fa-solid fa-circle-dot fa-lg" style="color: #57bf31"></i
-              >&nbsp;&nbsp;Activo
-            </td>
-            <td>
-              <button type="button" class="btn btn-transparent">
-                <i
-                  class="fa-regular fa-pen-to-square fa-xl"
-                  style="color: #2657ab"
-                ></i></button
-              ><button type="button" class="btn btn-transparent">
-                <i
-                  class="fa-regular fa-trash-can fa-xl"
-                  style="color: #ac1111"
-                ></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Bocaditos</td>
-            <td>Bocaditos para fiestas o eventos especiales</td>
-            <td>
-              <i class="fa-solid fa-circle-dot fa-lg" style="color: #ac1111"></i
-              >&nbsp;&nbsp;Inactivo
-            </td>
-            <td>
-              <button type="button" class="btn btn-transparent">
-                <i
-                  class="fa-regular fa-pen-to-square fa-xl"
-                  style="color: #2657ab"
-                ></i></button
-              ><button type="button" class="btn btn-transparent">
-                <i
-                  class="fa-regular fa-trash-can fa-xl"
-                  style="color: #ac1111"
-                ></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Listado de Insumos Disponibles</h1>
+    <button type="button" class="btn btn-outline-success" (click)="openCreateModal()">
+      <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE"></i>
+    </button>
   </div>
-  
+  <div class="card-body">
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Tipo de Unidad</th>
+          <th>Cantidad Disponible</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of insumos">
+          <td>{{ i.idSupplie }}</td>
+          <td>{{ i.supplieName }}</td>
+          <td>{{ i.supplieDescription }}</td>
+          <td>{{ i.unitOfMesure.unitName }}</td>
+          <td>{{ i.quantity }}</td>
+          <td>
+            <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
+              <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+            </button> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #createModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createModalLabel">{{ isEditMode ? 'Editar Insumo' : 'Crear Insumo' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="selectedSupplie.supplieName" [disabled]="isEditMode">
+      </div>
+      <div class="mb-3">
+        <label for="createSupplieDescription" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="createSupplieDescription" [(ngModel)]="selectedSupplie.supplieDescription"  [disabled]="isEditMode">
+      </div>
+      <div class="mb-3">
+        <label for="createQuantity" class="form-label">Cantidad Disponible</label>
+        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedSupplie.quantity">
+      </div>
+      <div class="mb-3">
+        <label for="createQuantity" class="form-label">Lote</label>
+        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedSupplie.supplieLot"  [disabled]="isEditMode">
+      </div>
+      <div class="mb-3">
+        <label for="createUnitOfMesureId" class="form-label ">Tipo de Unidad</label>
+        <select class="form-select" id="createUnitOfMesureId" [(ngModel)]="selectedSupplie.unitOfMesureId"  [disabled]="isEditMode">
+          <option *ngFor="let unit of unitOfMesureList" [value]="unit.idUnitOfMesure">{{ unit.unitName }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">{{ isEditMode ? 'Guardar Cambios' : 'Crear Insumo' }}</button>
+    </div>
+  </ng-template>
+</div>

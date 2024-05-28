@@ -1,0 +1,82 @@
+<div class="container-fluid">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Mantenimiento de Empleados:</h1>
+    <select id="inputState" class="form-select w-auto" [(ngModel)]="selectStateEmployee" (change)="onStateChange($event)">
+      <option value=true>Activo</option>
+      <option value=false>Inactivo</option>
+    </select>
+  </div>
+    <div class="card-body">
+      <table class="table table-bordered table-striped text-center">
+        <thead>
+          <tr>
+            <th>Codigo Usuario</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Perfil</th>
+            <th>Estado</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of usuarios">
+            <td>{{ i.idUser }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.usersType.name}}</td>
+            <td>
+              <i class="fa-solid fa-circle-dot fa-lg" 
+                 [ngStyle]="{'color': i.state == true ? '#57bf31' : '#ff2301'}">
+              </i>
+              &nbsp;&nbsp;{{i.state == true ? 'Activo' : 'Inactivo'}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
+                <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+              </button>
+              <button *ngIf="i.state" type="button" class="btn btn-transparent" (click)="deactivateProduct(i)">
+                <i class="fa-regular fa-trash-can fa-xl" style="color: #ac1111"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal -->
+    <ng-template #editModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Categoria</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario de edición -->
+        <div class="mb-3">
+          <label for="editProductType" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="editProductType" [(ngModel)]="selectedUser.name">
+        </div>
+        <div class="mb-3">
+          <label for="editDescription" class="form-label">Email</label>
+          <input type="email" class="form-control" id="editDescription" [(ngModel)]="selectedUser.email">
+        </div>
+        <div class="mb-3">
+          <label for="editUserTypeId" class="form-label">Perfil</label>
+          <select class="form-select" id="editUserTypeId" [(ngModel)]="selectedUser.idUserType">
+            <option *ngFor="let perfil of perfiles" [value]="perfil.idUserType">{{ perfil.name }}</option>
+          </select>
+        </div>
+        <div *ngIf="!selectedUser.state" class="mb-3">
+          <label for="editState" class="form-label">Estado</label>
+          <select class="form-select" id="editState" [(ngModel)]="editedUserState">
+            <option value=true>Activo</option>
+            <option value=false>Inactivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">Guardar Cambios</button>
+      </div>
+    </ng-template>
+  </div>
+  

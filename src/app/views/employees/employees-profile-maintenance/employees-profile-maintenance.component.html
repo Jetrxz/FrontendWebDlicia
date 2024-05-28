@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">Mantenimiento de Perfiles:</h1>
+        <div class="d-flex align-items-center">
+            <select  id="inputState" class="form-select w-auto me-2" [(ngModel)]="selectedStateEmmplooyeeType" (change)="onStateChange($event)">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+            <button type="button" class="btn btn-outline-success" (click)="openCreateModal()">
+                <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Codigo Perfil</th>
+                    <th>Nombre de Cargo</th>
+                    <th>Estado</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of perfiles">
+                    <td>{{ i.idUserType }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>
+                        <i class="fa-solid fa-circle-dot fa-lg" [ngStyle]="{'color': i.state == 'Activo' ? '#57bf31' : '#ff2301'}"></i>
+                        &nbsp;&nbsp;{{i.state}}
+                      </td>
+                    <td>
+                        <button type="button" class="btn btn-transparent"  (click)="openEditModal(i)">
+                            <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+                        </button>
+                        <button  *ngIf="selectedStateEmmplooyeeType === 'Activo'" type="button" class="btn btn-transparent" (click)="deactivateProfile(i)">
+                            <i class="fa-regular fa-trash-can fa-xl" style="color: #ac1111"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #createModal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="createModalLabel">{{ isEditMode ? 'Editar Perfil' : 'Crear Perfil' }}</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="selectedStateEmmplooyeeType === 'Activo'" class="mb-3">
+                <label for="createSupplieName" class="form-label">Cargo</label>
+                <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="selectedEmployeeType.name">
+            </div>
+            <div *ngIf="selectedStateEmmplooyeeType === 'Inactivo'" class="mb-3">
+                <label for="editState" class="form-label">Estado</label>
+                <select class="form-select" id="editState" [(ngModel)]="selectedEmployeeType.state">
+                  <option value="Activo">Activo</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">{{ isEditMode ? 'Guardar Cambios'
+                : 'Crear Perfil' }}</button>
+        </div>
+    </ng-template>
+</div>

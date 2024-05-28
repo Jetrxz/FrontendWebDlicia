@@ -1,1 +1,57 @@
-<p>supplies-list works!</p>
+<div class="container-fluid">
+  <div class="card-header d-flex flex-wrap align-items-center justify-content-between">
+    <h1 class="mb-3 mb-lg-0">Kardex de Insumos</h1>
+    <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+      <div class="input-group me-lg-2 mb-2 mb-lg-0">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Inicio</span>
+        </div>
+        <input type="date" class="form-control" placeholder="Fecha de Inicio" name="fecIniRep" [(ngModel)]="dfecini">
+      </div>
+      <div class="input-group me-lg-2 mb-2 mb-lg-0">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Fin</span>
+        </div>
+        <input type="date" class="form-control" placeholder="Fecha de Final" name="fecFinRep" [(ngModel)]="dfecfin">
+      </div>
+      <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+        <button class="btn btn-sm btn-outline-primary me-lg-2 mb-2 mb-lg-0" style="min-width: 130px;" (click)="listarkardex()">
+          <span>
+            <i class="fa fa-eye"></i>
+            &nbsp;Ver Lista
+          </span>
+        </button>
+        <button class="btn btn-sm btn-outline-success" style="min-width: 140px;" [disabled]="!habilitarExcel">
+          <span>
+            <i class="fa fa-download"></i>
+            &nbsp;Exportar EXCEL
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-body" *ngIf="mostrarTabla">
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th>Codigo Transaccion</th>
+          <th>Insumo</th>
+          <th>Cantidad</th>
+          <th>Fecha de Transaccion</th>
+          <th>Entrada/Salida</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let transaccion of transacciones">
+          <td>{{ transaccion.idSupplie }}</td>
+          <td>{{ transaccion.supplieName }}</td>
+          <td>{{ transaccion.quantity }}</td>
+          <td>{{ transaccion.transactionDate | date }}</td>
+          <td>{{ transaccion.supplieBound }}</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>

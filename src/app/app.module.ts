@@ -8,6 +8,8 @@ import { SidenavComponent } from './views/sidenav/sidenav.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { SublevelMenuComponent } from './views/sidenav/sublevel-menu.component';
 import { BodyComponent } from './views/body/body.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { BodyComponent } from './views/body/body.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
