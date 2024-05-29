@@ -16,7 +16,7 @@ export class SuppliesListComponent implements OnInit {
   dfecini: string = "";
   dfecfin: string = "";
   transacciones: transaccionesInsumosTable[] = [];
-  habilitarExcel:boolean = false;
+  habilitarExcel: boolean = false;
 
   ngOnInit(): void {
     const today = new Date();
@@ -33,16 +33,45 @@ export class SuppliesListComponent implements OnInit {
 
   async listarkardex() {
     try {
-      const rpta:any = await this.suppliesTransactionService.buscarRegistros(this.dfecini,this.dfecfin).toPromise();
+      const rpta: any = await this.suppliesTransactionService.buscarRegistros(this.dfecini, this.dfecfin).toPromise();
       this.transacciones = rpta;
       this.mostrarTabla = true;
       this.habilitarExcel = true;
+      if (rpta.length == 0) {
+        Swal.fire(
+          'Informacion',
+          'No se encontraron datos de esa fecha',
+          'info'
+        );
+        this.mostrarTabla = false;
+        this.habilitarExcel = false;
+      }
     } catch (error) {
       Swal.fire(
         'Error',
-        'Hubo un error ennla busqueda' + {error},
+        'Hubo un error ennla busqueda' + { error },
         'error'
       );
+    }
+  }
+
+  async exportarExcel() {
+    try {
+      const response = await this.suppliesTransactionService.exportarRegistros(this.formatDate(new Date(this.dfecini)), this.formatDate(new Date(this.dfecfin))).toPromise();
+      if (!response) {
+        throw new Error('No se recibió el archivo para descargar.');
+      }
+      const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `SuppliesTransactions-${new Date().toISOString()}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      Swal.fire('Error', 'No se pudo exportar los datos: ' + error, 'error');
     }
   }
 }

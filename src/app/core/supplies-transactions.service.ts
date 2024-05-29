@@ -15,4 +15,13 @@ export class SuppliesTransactionsService {
     let params = new HttpParams().set('dfecini', dfecini).set('dfecfin', dfecfin);
     return this.http.get<transaccionesInsumosTable[]>(`${this.urlbackend}`, { params });
   } 
+
+  registrarTransaccion<T>(obj: T): Observable<T> {
+    return this.http.post<T>(this.urlbackend, obj);
+  }
+
+  exportarRegistros(dfecini: any, dfecfin: any): Observable<Blob> {
+    let params = new HttpParams().set('dfecini', dfecini).set('dfecfin', dfecfin);
+    return this.http.get(`${this.urlbackend}/export`, { params, responseType: 'blob' });
+  }
 }

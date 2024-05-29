@@ -21,7 +21,7 @@
             &nbsp;Ver Lista
           </span>
         </button>
-        <button class="btn btn-sm btn-outline-success" style="min-width: 140px;" [disabled]="!habilitarExcel">
+        <button class="btn btn-sm btn-outline-success" style="min-width: 140px;" [disabled]="!habilitarExcel" (click)="exportarExcel()">
           <span>
             <i class="fa fa-download"></i>
             &nbsp;Exportar EXCEL
@@ -44,13 +44,18 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let transaccion of transacciones">
-          <td>{{ transaccion.idSupplie }}</td>
-          <td>{{ transaccion.supplieName }}</td>
+        <tr *ngFor="let transaccion of transacciones">
+          <td>{{ transaccion.idTransaction }}</td>
+          <td>{{ transaccion.supplies.supplieName }}</td>
           <td>{{ transaccion.quantity }}</td>
           <td>{{ transaccion.transactionDate | date }}</td>
-          <td>{{ transaccion.supplieBound }}</td>
-        </tr> -->
+          <td>
+            <i class="fa-solid fa-circle-dot fa-lg" 
+               [ngStyle]="{'color': transaccion.supplieBound == true ? '#57bf31' : '#ff2301'}">
+            </i>
+            &nbsp;&nbsp;{{transaccion.supplieBound == true ? 'Entrada' : 'Salida'}}
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

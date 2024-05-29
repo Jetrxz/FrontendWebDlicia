@@ -25,7 +25,7 @@ export class InsumosService {
   } 
 
   crearInsumo<T>(obj: T): Observable<T> {
-    return this.http.post<T>(this.urlbackend, obj);
+    return this.http.post<T>(this.urlbackend,obj);
   }
 
   actualizarInsumo<T>(obj:T):Observable<T>{

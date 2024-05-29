@@ -4,6 +4,7 @@ import { InsumosTable } from '../../../models/supplies.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { tipoUnidadTable } from '../../../models/unitOfMesure.model';
 import Swal from 'sweetalert2';
+import { SuppliesTransactionsService } from '../../../core/supplies-transactions.service';
 
 @Component({
   selector: 'app-supplies-maintenance',
@@ -12,12 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class SuppliesMaintenanceComponent implements OnInit {
 
-  constructor( private insumosService:InsumosService, private modalService: NgbModal){ }
+  constructor( private insumosService:InsumosService, private modalService: NgbModal,private suppliesTransactionService: SuppliesTransactionsService){ }
   @ViewChild('createModal') createModal!: TemplateRef<any>;
   insumos:InsumosTable [] = [];
   unitOfMesureList: tipoUnidadTable[] = [];
   selectedSupplie: InsumosTable = new InsumosTable();
   isEditMode: boolean = false;
+  originalSupplie: InsumosTable = new InsumosTable();
 
   ngOnInit(): void {
     this.listarInsumo();
@@ -42,26 +44,55 @@ export class SuppliesMaintenanceComponent implements OnInit {
 
   openEditModal(supplie: InsumosTable) {
     this.selectedSupplie = { ...supplie }; 
+    this.originalSupplie = { ...supplie }; 
     this.isEditMode = true;
     this.modalService.open(this.createModal, { ariaLabelledBy: 'openEditModal' });
   }
 
   formatDateToOnlyDate(date: Date): string {
     const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Adding leading zero
-    const day = ('0' + date.getDate()).slice(-2); // Adding leading zero
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
 
   async saveChanges(modal: any) {
+
     const dfecreg = this.formatDateToOnlyDate(new Date(this.selectedSupplie.lotDate));
     const supplie ={
+      idSupplie: this.selectedSupplie.idSupplie,
       supplieName: this.selectedSupplie.supplieName,
       supplieDescription: this.selectedSupplie.supplieDescription, 
       quantity: this.selectedSupplie.quantity, 
       supplieLot: this.selectedSupplie.supplieLot,
       lotDate: dfecreg,
-      unitOfMesureId: this.selectedSupplie.unitOfMesureId
+      unitOfMesureId: this.selectedSupplie.unitOfMesureId,
+      unitOfMesure: this.selectedSupplie.unitOfMesure
+      
+    }
+
+    let transaction: {
+      idSupplie: number,
+      quantity: number,
+      transactionDate: Date,
+      supplieBound: boolean
+    };
+
+    if (this.isEditMode) {
+      const quantityDifference = this.selectedSupplie.quantity - this.originalSupplie.quantity;
+      transaction = {
+        idSupplie: this.selectedSupplie.idSupplie,
+        quantity: Math.abs(quantityDifference),
+        transactionDate: new Date(),
+        supplieBound: quantityDifference > 0
+      };
+    } else {
+      transaction = {
+        idSupplie: this.selectedSupplie.idSupplie,
+        quantity: this.selectedSupplie.quantity,  
+        transactionDate: new Date(),
+        supplieBound: true
+      };
     }
 
     const result = await Swal.fire({
@@ -79,6 +110,8 @@ export class SuppliesMaintenanceComponent implements OnInit {
       try {
         if (this.isEditMode) {
           await this.insumosService.actualizarInsumo(supplie).toPromise();
+          console.log(transaction)
+          await this.suppliesTransactionService.registrarTransaccion(transaction).toPromise();
           this.listarInsumo();
           Swal.fire(
             'Cambios guardados!',
@@ -86,13 +119,19 @@ export class SuppliesMaintenanceComponent implements OnInit {
             'success'
           );
         } else {
-          await this.insumosService.crearInsumo(supplie).toPromise();
-          this.listarInsumo();
-          Swal.fire(
-            'Cambios guardados!',
-            'El elemento ha sido creado.',
-            'success'
-          );
+          const createdSupplie = await this.insumosService.crearInsumo(supplie).toPromise();
+         if (createdSupplie && createdSupplie.idSupplie) {
+            transaction.idSupplie = createdSupplie.idSupplie;
+            await this.suppliesTransactionService.registrarTransaccion(transaction).toPromise();
+            this.listarInsumo();
+            Swal.fire(
+              'Cambios guardados!',
+              'El elemento ha sido creado.',
+              'success'
+            );
+          } else {
+            throw new Error('Error al obtener el ID del nuevo insumo');
+          }
         }
       } catch (error) {
         Swal.fire(
