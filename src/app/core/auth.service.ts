@@ -14,15 +14,22 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userType', response.user.userType);
       })
     );
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userType');
+    window.location.reload();
   }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  getUserType(): string | null {
+    return localStorage.getItem('userType');
   }
 }

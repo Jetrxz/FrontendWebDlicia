@@ -1,12 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ProductsService } from '../../../core/products.service';
-import { ProductosTable } from '../../../models/products.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { InsumosService } from '../../../core/supplies.service';
-import { tipoUnidadTable } from '../../../models/unitOfMesure.model';
-import { ProductTypeService } from '../../../core/product-type.service';
-import { tipoProductoTable } from '../../../models/productType.model';
+import { InsumosService } from '../../../../core/supplies.service';
+import { ProductTypeService } from '../../../../core/product-type.service';
+import { ProductosTable } from '../../../../models/products.model';
+import { tipoProductoTable } from '../../../../models/productType.model';
+import { tipoUnidadTable } from '../../../../models/unitOfMesure.model';
+import { ProductsService } from '../../../../core/products.service';
 
 @Component({
   selector: 'app-products-maintenance',
@@ -150,4 +150,38 @@ export class ProductsMaintenanceComponent  implements OnInit{
   
     modal.close();
   }
+
+  onKeyDown(event: any) {
+    // Obtener el código de la tecla presionada
+    const keyCode = event.keyCode || event.which;
+  
+    // Permitir solo teclas numéricas, la tecla de retroceso, el punto decimal y evitar otros caracteres
+    if (
+      (keyCode < 48 || keyCode > 57) &&  // Teclas numéricas
+      keyCode !== 8 &&                    // Tecla de retroceso
+      keyCode !== 46 &&                   // Punto decimal
+      keyCode !== 37 &&                   // Flecha izquierda
+      keyCode !== 39 &&                     // Flecha derecha
+      keyCode !== 190           // Flecha derecha
+    ) {
+      event.preventDefault(); // Prevenir la acción por defecto si no es una tecla permitida
+      Swal.fire(
+        'Cuidado!',
+        'Solo puede ingresar números',
+        'info'
+      );
+    }
+  
+    // Prevenir la entrada del signo de menos (-)
+    if (keyCode === 189 || keyCode === 109) {
+      event.preventDefault(); // Prevenir la acción por defecto si se presiona el signo de menos
+      Swal.fire(
+        'Cuidado!',
+        'No puede ingresar números negativos',
+        'info'
+      );
+    }
+  }
+  
+  
 }

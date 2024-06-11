@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { tipoUsuariosTable } from '../../../models/usersType.model';
-import { EmployeeTypeService } from '../../../core/employee-type.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { EmployeeTypeService } from '../../../../core/employee-type.service';
+import { tipoUsuariosTable } from '../../../../models/usersType.model';
 
 @Component({
   selector: 'app-employees-profile-maintenance',

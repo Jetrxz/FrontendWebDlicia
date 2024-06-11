@@ -3,6 +3,7 @@ import { navbarData } from './nav-data';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { INavbarData, fadeInOut } from './helper';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/auth.service';
 
 interface SideNavToggle{
   screenWidth:number;
@@ -44,11 +45,12 @@ export class SidenavComponent implements OnInit{
     }
   }
 
-  constructor(public router: Router) {}
+  constructor(private authService: AuthService, public router: Router) {}
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.toggleCollapse();
+    this.setNavData();
   }
 
   toggleCollapse():void{
@@ -78,5 +80,18 @@ export class SidenavComponent implements OnInit{
         }
       }
     }
+  }
+
+  setNavData(): void {
+    const userType = this.authService.getUserType();
+    if (userType === 'Administrador') {
+      this.navData = navbarData;
+    } else if (userType === 'Vendedor') {
+      this.navData = navbarData.filter(item => item.routeLink === 'sales');
+    }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

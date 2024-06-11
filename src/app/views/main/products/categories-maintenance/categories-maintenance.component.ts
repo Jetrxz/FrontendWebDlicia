@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ProductTypeService } from '../../../core/product-type.service';
-import { tipoProductoTable } from '../../../models/productType.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { ProductTypeService } from '../../../../core/product-type.service';
+import { tipoProductoTable } from '../../../../models/productType.model';
 
 @Component({
   selector: 'app-categories-maintenance',

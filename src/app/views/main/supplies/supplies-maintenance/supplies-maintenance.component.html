@@ -50,11 +50,11 @@
       </div>
       <div class="mb-3">
         <label for="createQuantity" class="form-label">Cantidad Disponible</label>
-        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedSupplie.quantity">
+        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedSupplie.quantity" min="0" (keydown)="onKeyDown($event)">
       </div>
       <div class="mb-3">
         <label for="createQuantity" class="form-label">Lote</label>
-        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedSupplie.supplieLot"  [disabled]="isEditMode">
+        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedSupplie.supplieLot" [disabled]="isEditMode" min="0" (keydown)="onKeyDown($event)">
       </div>
       <div class="mb-3">
         <label for="createUnitOfMesureId" class="form-label ">Tipo de Unidad</label>

@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { UsuariosTable } from '../../../models/users.model';
-import { EmployeeService } from '../../../core/employee.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { EmployeeTypeService } from '../../../core/employee-type.service';
-import { tipoUsuariosTable } from '../../../models/usersType.model';
+import { EmployeeService } from '../../../../core/employee.service';
+import { EmployeeTypeService } from '../../../../core/employee-type.service';
+import { UsuariosTable } from '../../../../models/users.model';
+import { tipoUsuariosTable } from '../../../../models/usersType.model';
 
 @Component({
   selector: 'app-employees-list',

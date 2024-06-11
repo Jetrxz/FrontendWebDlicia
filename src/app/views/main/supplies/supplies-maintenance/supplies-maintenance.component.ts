@@ -1,11 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { InsumosService } from '../../../core/supplies.service';
-import { InsumosTable } from '../../../models/supplies.model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { tipoUnidadTable } from '../../../models/unitOfMesure.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import Swal from 'sweetalert2';
-import { SuppliesTransactionsService } from '../../../core/supplies-transactions.service';
-
+import { SuppliesTransactionsService } from '../../../../core/supplies-transactions.service';
+import { InsumosTable } from '../../../../models/supplies.model';
+import { tipoUnidadTable } from '../../../../models/unitOfMesure.model';
+import { InsumosService } from '../../../../core/supplies.service';
 @Component({
   selector: 'app-supplies-maintenance',
   templateUrl: './supplies-maintenance.component.html',
@@ -149,5 +148,30 @@ export class SuppliesMaintenanceComponent implements OnInit {
     }
   
     modal.close();
+  }
+
+  onKeyDown(event: any) {
+    // Obtener el código de la tecla presionada
+    const keyCode = event.keyCode || event.which;
+  
+    // Permitir solo teclas numéricas y la tecla de retroceso
+    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+      event.preventDefault(); // Prevenir la acción por defecto si no es una tecla numérica o de retroceso
+      Swal.fire(
+        'Cuidado!',
+        'Solo puede ingresar numeros',
+        'info'
+      );
+    }
+  
+    // Prevenir la entrada del signo de menos (-)
+    if (keyCode === 189 || keyCode === 109) {
+      event.preventDefault(); // Prevenir la acción por defecto si se presiona el signo de menos
+      Swal.fire(
+        'Cuidado!',
+        'No puede ingresar numeros negativos',
+        'info'
+      );
+    }
   }
 }

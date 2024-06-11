@@ -47,7 +47,7 @@
       </div>
       <div class="mb-3">
         <label for="createQuantity" class="form-label">Precio</label>
-        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedProduct.price">
+        <input type="number" class="form-control" id="createQuantity" [(ngModel)]="selectedProduct.price" min="0" (keydown)="onKeyDown($event)">
       </div>
       <div class="mb-3">
         <label for="createUnitOfMesureId" class="form-label">Tipo de Producto</label>

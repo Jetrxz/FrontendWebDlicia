@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { SuppliesTransactionsService } from '../../../core/supplies-transactions.service';
-import { transaccionesInsumosTable } from '../../../models/suppliesTransactions.model';
+import { SuppliesTransactionsService } from '../../../../core/supplies-transactions.service';
+import { transaccionesInsumosTable } from '../../../../models/suppliesTransactions.model';
 
 @Component({
   selector: 'app-supplies-list',

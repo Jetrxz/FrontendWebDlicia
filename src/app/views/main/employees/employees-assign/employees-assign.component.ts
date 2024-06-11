@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { tipoUsuariosTable } from '../../../models/usersType.model';
-import { EmployeeTypeService } from '../../../core/employee-type.service';
 import Swal from 'sweetalert2';
-import { EmployeeService } from '../../../core/employee.service';
+import { EmployeeTypeService } from '../../../../core/employee-type.service';
+import { EmployeeService } from '../../../../core/employee.service';
+import { tipoUsuariosTable } from '../../../../models/usersType.model';
+
 
 @Component({
   selector: 'app-employees-assign',
