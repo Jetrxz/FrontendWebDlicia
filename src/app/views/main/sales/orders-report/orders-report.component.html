@@ -1,1 +1,47 @@
-<p>orders-report works!</p>
+<div class="container-fluid">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h1 class="mb-0">Control de Pedidos:</h1>
+      <br><br><br><br>
+      <div class="d-flex align-items-center">
+        <select id="inputState" class="form-select w-auto me-2">
+          <option value="Activo">Activo</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+        <button type="button" class="btn btn-outline-success">
+          <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE"></i>
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-striped text-center">
+        <thead>
+          <tr>
+            <th>Codigo de Orden</th>
+            <th>Nombre de Cliente</th>
+            <th>Fecha de Orden</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Fecha Fin Pedido</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr *ngFor="let i of clients">
+            <th scope="row">{{i.idClient}}</th>
+            <td>{{i.clientName}}</td>
+            <td>{{i.cardId}}</td>
+            <td>{{i.phone}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.adress}}</td>
+            <td>
+              <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
+                <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+              </button>
+              <button type="button" class="btn btn-transparent" (click)="openEnvioCorreoModal(i)">
+                <i class="fa-regular fa-envelope fa-xl" style="color: #B197FC;"></i>
+              </button>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>

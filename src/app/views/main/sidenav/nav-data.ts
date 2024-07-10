@@ -41,18 +41,18 @@ export const navbarData: INavbarData[]  = [
         icon: 'fa-solid fa-tags',
         label: 'Ventas',
         items: [
-            {
-                routeLink: 'sales/sale-report',
-                label: 'Reporte de Ventas'
-            },
+            // {
+            //     routeLink: 'sales/sale-report',
+            //     label: 'Reporte de Ventas'
+            // },
             {
                 routeLink: 'sales/clients-report',
-                label: 'Reporte de Clientes'
+                label: 'Campaña de clientes'
             },
-            {
-                routeLink: 'sales/orders-report',
-                label: 'Reporte de Pedidos'
-            }
+            // {
+            //     routeLink: 'sales/orders-report',
+            //     label: 'Reporte de Pedidos'
+            // }
         ]
     },
     {

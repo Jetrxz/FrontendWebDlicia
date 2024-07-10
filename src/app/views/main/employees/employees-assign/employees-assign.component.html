@@ -15,9 +15,10 @@
       </div>
       <div class="col-md-4">
         <label for="inputState" class="form-label">Tipo de Usuario</label>
-        <select id="inputState" class="form-select" [(ngModel)]="perfil" name="perfil" *ngFor="let i of tipoUsuarios">
-          <option>{{i.name}}</option>
+        <select id="inputState" class="form-select" [(ngModel)]="perfil" name="perfil">
+          <option  *ngFor="let i of tipoUsuarios">{{i.name}}</option>
         </select>
+        
       </div>
       <button type="button" class="btn btn-info" (click)="crearEmpleado()">
         <i class="fa-solid fa-plus fa-xl" style="color: #2657ab">&nbsp;Crear Empleado</i>

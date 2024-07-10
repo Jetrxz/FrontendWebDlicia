@@ -5,6 +5,7 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { SalesReportComponent } from './sales-report/sales-report.component';
 import { ClientsReportComponent } from './clients-report/clients-report.component';
 import { OrdersReportComponent } from './orders-report/orders-report.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { OrdersReportComponent } from './orders-report/orders-report.component';
   ],
   imports: [
     CommonModule,
-    SalesRoutingModule
+    SalesRoutingModule,
+    FormsModule
   ]
 })
 export class SalesModule { }

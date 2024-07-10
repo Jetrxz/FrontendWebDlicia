@@ -34,6 +34,7 @@ export class SuppliesListComponent implements OnInit {
   async listarkardex() {
     try {
       const rpta: any = await this.suppliesTransactionService.buscarRegistros(this.dfecini, this.dfecfin).toPromise();
+      console.log(rpta)
       this.transacciones = rpta;
       this.mostrarTabla = true;
       this.habilitarExcel = true;

@@ -1,1 +1,107 @@
-<p>clients-report works!</p>
+<div class="container-fluid">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Listado de Clientes :</h1>
+    <br><br><br><br>
+    <button type="button" class="btn btn-outline-success" (click)="openCreateModal()">
+      <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE"></i>
+    </button>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th>Codigo de Cliente</th>
+          <th>Nombres</th>
+          <th>Documento</th>
+          <th>Celular</th>
+          <th>Email</th>
+          <th>Direccion</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of clients">
+          <th scope="row">{{i.idClient}}</th>
+          <td>{{i.clientName}}</td>
+          <td>{{i.cardId}}</td>
+          <td>{{i.phone}}</td>
+          <td>{{i.email}}</td>
+          <td>{{i.adress}}</td>
+          <td>
+            <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
+              <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+            </button>
+            <button type="button" class="btn btn-transparent" (click)="openEnvioCorreoModal(i)">
+              <i class="fa-regular fa-envelope fa-xl" style="color: #B197FC;"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- Modal -->
+  <ng-template #editModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="editModalLabel">{{ isEditMode ? 'Editar Cliente' : 'Crear Cliente' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <!-- Formulario de edición -->
+      <div class="mb-3">
+        <label for="editNames" class="form-label">Nombres</label>
+        <input type="text" class="form-control" id="editNames" [(ngModel)]="selectedClient.clientName">
+      </div>
+      <div class="mb-3">
+        <label for="editDocumentId" class="form-label">Documento</label>
+        <input type="text" class="form-control" id="editDocumentId" [(ngModel)]="selectedClient.cardId">
+      </div>
+      <div class="mb-3">
+        <label for="editPhone" class="form-label">Celular</label>
+        <input type="text" class="form-control" id="editPhone" [(ngModel)]="selectedClient.phone">
+      </div>
+      <div class="mb-3">
+        <label for="editEmail" class="form-label">Email</label>
+        <input type="text" class="form-control" id="editEmail" [(ngModel)]="selectedClient.email">
+      </div>
+      <div class="mb-3">
+        <label for="editAdress" class="form-label">Direccion</label>
+        <input type="text" class="form-control" id="editAdress" [(ngModel)]="selectedClient.adress"> 
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">Guardar Cambios</button>
+    </div>
+  </ng-template>
+
+  <ng-template #envcor let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="createModalLabel">Enviar correo de Campaña</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Nombre del Cliente</label>
+        <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="selectedClient.clientName" disabled>
+      </div>
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Correo</label>
+        <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="selectedClient.email" disabled>
+      </div>
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Mensaje</label>
+        <textarea class="form-control" id="createSupplieName" [(ngModel)]="mensajeCorreo" style="height: 150px; resize: none;"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="createSupplieName" class="form-label">Imagen de Campaña</label>
+        <input type="file" class="form-control" id="createSupplieName" (change)="onFileChange($event)">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="EnviarCorreo(modal)">Enviar Correo</button>
+    </div>
+  </ng-template>
+</div>
