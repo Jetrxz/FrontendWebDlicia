@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { InsumosTable } from '../models/supplies.model';
 import { tipoUnidadTable } from '../models/unitOfMesure.model';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InsumosService {
-  urlbackend ="https://localhost:7044/api/v1/Supplie"
-  urlbackend2 ="https://localhost:7044/api/v1/UnitOfMesure"
+  private urlbackend = `${API_URL}/Supplie`;
+  private urlbackend2 = `${API_URL}/UnitOfMesure`;
+
   constructor(
     private http:HttpClient
   ) { }

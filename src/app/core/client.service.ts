@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClientTable } from '../models/client.model';
 import { Observable } from 'rxjs';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
-  urlbackend = "https://localhost:7044/api/v1/Client"
+  private urlbackend = `${API_URL}/Client`;
+  
   constructor(private http: HttpClient) { }
 
   

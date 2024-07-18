@@ -2,12 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tipoProductoTable } from '../models/productType.model';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductTypeService {
-  urlbackend ="https://localhost:7044/api/v1/ProducType"
+  private urlbackend = `${API_URL}/ProducType`;
+  
   constructor(private http:HttpClient) { }
 
   listarTipoProductos(state: string): Observable<tipoProductoTable[]> {

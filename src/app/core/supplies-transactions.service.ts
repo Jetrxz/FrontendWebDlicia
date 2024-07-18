@@ -2,12 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { transaccionesInsumosTable } from '../models/suppliesTransactions.model';
 import { Observable } from 'rxjs';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SuppliesTransactionsService {
-  urlbackend ="https://localhost:7044/api/v1/SuppliesTransactions"
+  private urlbackend = `${API_URL}/Product`;
+
   constructor(private http: HttpClient) { }
 
   buscarRegistros(dfecini: any, dfecfin: any):Observable<transaccionesInsumosTable[]>

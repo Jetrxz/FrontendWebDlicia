@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:7044/api/v1/auth';
-
+  private apiUrl = `${API_URL}/auth`;
+  
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {

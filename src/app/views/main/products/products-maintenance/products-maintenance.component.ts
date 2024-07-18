@@ -18,7 +18,7 @@ export class ProductsMaintenanceComponent  implements OnInit{
   @ViewChild('editModal') editModal!: TemplateRef<any>;
   @ViewChild('updateModal') updateModal!: TemplateRef<any>;
   productos: ProductosTable [] = [];
-  urlBackend: string = "https://localhost:7044";
+  urlBackend: string = "https://20.206.205.121:5000";
   isEditMode: boolean = false;
   selectedProduct: ProductosTable = new ProductosTable();
   unitOfMesureList: tipoUnidadTable[] = [];

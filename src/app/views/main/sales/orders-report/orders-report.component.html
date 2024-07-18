@@ -1,47 +1,149 @@
 <div class="container-fluid">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h1 class="mb-0">Control de Pedidos:</h1>
-      <br><br><br><br>
-      <div class="d-flex align-items-center">
-        <select id="inputState" class="form-select w-auto me-2">
-          <option value="Activo">Activo</option>
-          <option value="Inactivo">Inactivo</option>
-        </select>
-        <button type="button" class="btn btn-outline-success">
-          <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE"></i>
-        </button>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h1 class="mb-0">Control de Pedidos:</h1>
+    <br><br><br><br>
+    <div class="d-flex align-items-center">
+      <select id="inputState" class="form-select w-auto me-2">
+        <option value=true>Activo</option>
+      </select>
+      <button type="button" class="btn btn-outline-success" (click)="openAddModal()">
+        <i class="fa-solid fa-plus fa-2xl" style="color: #63E6BE"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-striped text-center">
+      <thead>
+        <tr>
+          <th>Codigo de Orden</th>
+          <th>Nombre de Cliente</th>
+          <th>Fecha de Orden</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Fecha Fin Pedido</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let i of clients">
+          <th scope="row">{{i.idClient}}</th>
+          <td>{{i.clientName}}</td>
+          <td>{{i.cardId}}</td>
+          <td>{{i.phone}}</td>
+          <td>{{i.email}}</td>
+          <td>{{i.adress}}</td>
+          <td>
+            <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
+              <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
+            </button>
+            <button type="button" class="btn btn-transparent" (click)="openEnvioCorreoModal(i)">
+              <i class="fa-regular fa-envelope fa-xl" style="color: #B197FC;"></i>
+            </button>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #addModal let-modal>
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Nuevo Pedido</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="addClient" class="form-label me-2">Buscar Cliente</label>
+            <button type="button" class="btn btn-outline-info mb-2" (click)="openSearchModal()">
+              <i class="fa-solid fa-magnifying-glass" style="color: #74C0FC;"></i>
+            </button>
+            <input type="text" class="form-control" id="createSupplieName" [(ngModel)]="cnomcli" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="addProduct" class="form-label">Agregar Producto</label>
+            <select id="inputState" class="form-select w-auto me-2 mb-2" [(ngModel)]="selectedProduct"
+              (change)="onProductChange($event)">
+              <option value="0" selected>Seleccione un producto</option>
+              <option *ngFor="let producto of productos" [value]="producto.idProduct">{{producto.productName}}</option>
+            </select>
+            <input type="text" class="form-control mb-2" id="createProductDescription" [(ngModel)]="productDescription"
+              disabled>
+            <div class="d-flex justify-content-between align-items-center">
+              <input type="number" class="form-control me-2" id="createQuantity" min="0" [(ngModel)]="quantity"
+                (keydown)="onKeyDown($event)">
+              <button type="button" class="btn btn-outline-info mb-2 mt-2" (click)="addProductToOrder()">
+                <i class="fa-solid fa-plus" style="color: #63E6BE;"></i>
+              </button>
+            </div>
+          </div>
+          <ng-container *ngIf="order.length > 0">
+            <div class="mb-3">
+              <table class="table table-bordered table-striped text-center">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Sub Total</th>
+                    <th>Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of order; let i = index">
+                    <td>{{ item.productName }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.subTotal }}</td>
+                    <td>
+                      <button type="button" class="btn btn-transparent" (click)="removeProductFromOrder(i)">
+                        <i class="fa-solid fa-trash" style="color: red;"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="crearPedido(modal)">Guardar Cambios</button>
+        </div>
       </div>
     </div>
-    <div class="card-body">
-      <table class="table table-bordered table-striped text-center">
-        <thead>
-          <tr>
-            <th>Codigo de Orden</th>
-            <th>Nombre de Cliente</th>
-            <th>Fecha de Orden</th>
-            <th>Total</th>
-            <th>Estado</th>
-            <th>Fecha Fin Pedido</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <tr *ngFor="let i of clients">
-            <th scope="row">{{i.idClient}}</th>
-            <td>{{i.clientName}}</td>
-            <td>{{i.cardId}}</td>
-            <td>{{i.phone}}</td>
-            <td>{{i.email}}</td>
-            <td>{{i.adress}}</td>
-            <td>
-              <button type="button" class="btn btn-transparent" (click)="openEditModal(i)">
-                <i class="fa-regular fa-pen-to-square fa-xl" style="color: #2657ab"></i>
-              </button>
-              <button type="button" class="btn btn-transparent" (click)="openEnvioCorreoModal(i)">
-                <i class="fa-regular fa-envelope fa-xl" style="color: #B197FC;"></i>
-              </button>
-            </td>
-          </tr> -->
-        </tbody>
-      </table>
+  </ng-template>
+
+  <ng-template #searchModal let-modal>
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchModalLabel">Busqueda de Clientes</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered table-striped text-center mt-3">
+            <thead>
+              <tr>
+                <th>Codigo de Cliente</th>
+                <th>Nombre de Cliente</th>
+                <th>DNI</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of clientes">
+                <td (dblclick)="seleccionarCliente(cliente); modal.dismiss();">{{ cliente.idClient }}</td>
+                <td (dblclick)="seleccionarCliente(cliente); modal.dismiss();">{{ cliente.clientName }}</td>
+                <td (dblclick)="seleccionarCliente(cliente); modal.dismiss();">{{ cliente.cardId }}</td>
+                <td (dblclick)="seleccionarCliente(cliente); modal.dismiss();">{{ cliente.phone }}</td>
+                <td (dblclick)="seleccionarCliente(cliente); modal.dismiss();">{{ cliente.email }}</td>
+                <td (dblclick)="seleccionarCliente(cliente); modal.dismiss();">{{ cliente.adress }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  </ng-template>
+</div>

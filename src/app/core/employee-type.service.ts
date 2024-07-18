@@ -2,12 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tipoUsuariosTable } from '../models/usersType.model';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeTypeService {
-  urlbackend ="https://localhost:7044/api/v1/UsersType"
+  private urlbackend = `${API_URL}/UsersType`;
+  
   constructor(private http: HttpClient) { }
 
   listarPerfiles(state: string):Observable<tipoUsuariosTable[]>

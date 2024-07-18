@@ -2,12 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsuariosTable } from '../models/users.model';
 import { Observable } from 'rxjs';
+import { API_URL } from '../constants/contantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  urlbackend = "https://localhost:7044/api/v1/Users"
+  private urlbackend = `${API_URL}/Users`;
+
   constructor(private http: HttpClient) { }
 
   listarEmpleados(state: boolean): Observable<UsuariosTable[]> {
